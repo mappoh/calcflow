@@ -1,6 +1,6 @@
 # CalcFlow
 
-Interactive menu-driven CLI for VASP computational chemistry workflows. Inspired by [VASPKIT](https://vaspkit.com/), CalcFlow provides a guided interface for setting up calculations, managing jobs, and post-processing results.
+Interactive menu-driven CLI for VASP computational chemistry workflows. CalcFlow provides a guided interface for setting up calculations, managing jobs, and post-processing results.
 
 ## Installation
 
