@@ -163,8 +163,10 @@ def _dispatch(category_id, option_index):
         handler(_session)
     except KeyboardInterrupt:
         print("\n  Interrupted. Returning to menu.")
+        input("  Press Enter to continue...")
     except CalcFlowError as e:
         print(f"\n  Error: {e}")
+        input("  Press Enter to continue...")
     except SystemExit:
         _erase_lines()
         raise

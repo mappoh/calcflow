@@ -40,7 +40,8 @@ def run_vasp_calc(poscar_path, output_dir, params):
 
     try:
         calc = Vasp(directory=output_dir, **params)
-        calc.calculate(atoms)
-        logging.info("VASP calculation launched in %s", output_dir)
+        atoms.calc = calc
+        calc.write_input(atoms)
+        logging.info("VASP input files written to %s", output_dir)
     except Exception as e:
-        raise CalculationError(f"VASP calculation failed: {e}") from e
+        raise CalculationError(f"Failed to write VASP input files: {e}") from e
