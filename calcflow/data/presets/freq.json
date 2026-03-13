@@ -1,0 +1,19 @@
+{
+    "ENCUT": 450.0,
+    "POTIM": 0.015,
+    "SIGMA": 0.03,
+    "EDIFF": 1.0e-08,
+    "EDIFFG": -0.03,
+    "ALGO": "Normal",
+    "PREC": "Normal",
+    "GGA": "PE",
+    "IBRION": 5,
+    "ISIF": 2,
+    "ISMEAR": 0,
+    "ISPIN": 1,
+    "LORBIT": 11,
+    "NSW": 1,
+    "NFREE": 2,
+    "LCHARG": false,
+    "LWAVE": false
+}

@@ -1,0 +1,20 @@
+{
+    "ENCUT": 520.0,
+    "SIGMA": 0.01,
+    "EDIFF": 1.0e-06,
+    "ISYM": 0,
+    "ALGO": "Fast",
+    "PREC": "Accurate",
+    "GGA": "PE",
+    "IBRION": -1,
+    "ISIF": 2,
+    "ISMEAR": 0,
+    "ISPIN": 1,
+    "LORBIT": 11,
+    "NSW": 0,
+    "NELM": 150,
+    "LCHARG": true,
+    "LWAVE": false,
+    "LASPH": true,
+    "LAECHG": true
+}

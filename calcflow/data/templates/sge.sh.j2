@@ -1,0 +1,5 @@
+#!/bin/bash
+module load {{ vasp_module }}
+cd {{ work_dir }}
+mpirun -np $NSLOTS {{ vasp_cmd }}
+#end
