@@ -6,12 +6,13 @@ _LOG_FORMAT = "%(asctime)s [%(levelname)s]: %(message)s"
 
 
 def setup_logging(level=logging.INFO):
-    """Configure root logger with console output."""
+    """Configure root logger. Console only shows warnings+; INFO goes to file."""
     root = logging.getLogger()
     root.setLevel(level)
     formatter = logging.Formatter(_LOG_FORMAT)
     if not any(isinstance(h, logging.StreamHandler) for h in root.handlers):
         handler = logging.StreamHandler(sys.stderr)
+        handler.setLevel(logging.WARNING)
         handler.setFormatter(formatter)
         root.addHandler(handler)
 
