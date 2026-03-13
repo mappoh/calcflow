@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 
 from ase import Atoms
@@ -73,6 +74,8 @@ def run_vasp_calc(poscar_path, output_dir, params):
         _write_poscar(atoms, output_dir)
         _write_incar(params, output_dir)
         _write_kpoints(params, output_dir)
+        print("  VASP input files ready.")
+        sys.stdout.flush()
         logging.info("VASP input files written to %s", output_dir)
     except CalculationError:
         raise

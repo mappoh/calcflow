@@ -1,4 +1,5 @@
 import os
+import sys
 
 from calcflow.core.vasp_runner import run_vasp_calc
 from calcflow.core.neb import generate_neb_path
@@ -166,25 +167,26 @@ def _workflow_handler(session, preset_name, after_msg=None):
         if not results:
             return
         print(f"\n  {len(results)} calculations set up.")
-        if after_msg:
-            print(f"  {after_msg}")
         print("\n  Submitting jobs to cluster...")
         for _, full_dir in results:
             session["last_calc_dir"] = full_dir
             submit_job_handler(session, standalone=False)
         print(f"\n  All {len(results)} jobs submitted.")
+        if after_msg:
+            print(f"  {after_msg}")
+        sys.stdout.flush()
         after_complete()
     else:
         poscar, full_dir, params = _run_single(session, preset_name)
         if poscar is None:
             return
         run_vasp_calc(poscar, full_dir, params)
-        print(f"\n  Calculation set up in: {os.path.basename(full_dir)}/")
-        if after_msg:
-            print(f"  {after_msg}")
-        print()
         session["last_calc_dir"] = full_dir
         submit_job_handler(session, standalone=False)
+        print()
+        if after_msg:
+            print(f"  {after_msg}")
+        sys.stdout.flush()
         after_complete()
 
 

@@ -1,4 +1,5 @@
 import os
+import sys
 
 from calcflow.core.job_submitter import submit_job, check_job_status, cancel_job
 from calcflow.config.settings import get_config
@@ -58,8 +59,10 @@ def submit_job_handler(session, standalone=True):
 
     session["last_job_id"] = job_id
     print(f"\n  Job submitted successfully! ID: {job_id}")
-    print()
+    print(f"    Directory: {work_dir_name}")
+    sys.stdout.flush()
     if standalone:
+        print()
         after_complete()
 
 
