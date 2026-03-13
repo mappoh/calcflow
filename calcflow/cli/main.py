@@ -170,6 +170,9 @@ def _dispatch(category_id, option_index):
     except SystemExit:
         _erase_lines()
         raise
+    except Exception as e:
+        print(f"\n  Unexpected error: {e}")
+        input("  Press Enter to continue...")
 
 
 def run():

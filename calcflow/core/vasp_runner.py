@@ -16,6 +16,7 @@ def _write_poscar(atoms, output_dir):
     """Write POSCAR file from ASE atoms object."""
     poscar_path = os.path.join(output_dir, "POSCAR")
     write_vasp(poscar_path, atoms, direct=True, sort=True)
+    print("    POSCAR written")
     logging.info("POSCAR written to %s", poscar_path)
 
 
@@ -31,6 +32,7 @@ def _write_incar(params, output_dir):
             if isinstance(val, bool):
                 val = ".TRUE." if val else ".FALSE."
             f.write(f"{key} = {val}\n")
+    print("    INCAR written")
     logging.info("INCAR written to %s", incar_path)
 
 
@@ -45,6 +47,7 @@ def _write_kpoints(params, output_dir):
         f.write("Gamma\n")
         f.write(f"  {kpts[0]}  {kpts[1]}  {kpts[2]}\n")
         f.write("  0  0  0\n")
+    print("    KPOINTS written")
     logging.info("KPOINTS written to %s", kpoints_path)
 
 
@@ -60,6 +63,7 @@ def run_vasp_calc(poscar_path, output_dir, params):
         output_dir: Directory where VASP files will be written
         params: Dict of VASP parameters (from a preset or merged)
     """
+    print("\n  Writing VASP input files...")
     try:
         atoms: Atoms = read(poscar_path, index=-1)  # type: ignore[assignment]
     except Exception as e:
