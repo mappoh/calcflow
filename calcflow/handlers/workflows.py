@@ -3,7 +3,7 @@ import os
 from calcflow.core.vasp_runner import run_vasp_calc
 from calcflow.core.neb import generate_neb_path
 from calcflow.presets.manager import load_preset
-from calcflow.handlers.common import pick_structure, pick_structures
+from calcflow.handlers.common import pick_structure, pick_structures, after_complete
 from calcflow.utils.prompts import ask, ask_choice, ask_yes_no, ask_int, ask_incar_params
 from calcflow.utils.fs import prepare_output_directory
 from calcflow.handlers.jobs import submit_job_handler
@@ -171,7 +171,9 @@ def _workflow_handler(session, preset_name, after_msg=None):
         if ask_yes_no("Submit all to cluster?", default=False):
             for _, full_dir in results:
                 session["last_calc_dir"] = full_dir
-                submit_job_handler(session)
+                submit_job_handler(session, standalone=False)
+            print(f"\n  All {len(results)} jobs submitted.")
+        after_complete()
     else:
         poscar, full_dir, params = _run_single(session, preset_name)
         if poscar is None:
@@ -242,10 +244,12 @@ def neb_path_generation(session):
     print(
         f"\n  Generated {len(images)} images (including endpoints) in {os.path.basename(output_dir)}/")
     session["last_calc_dir"] = output_dir
+    after_complete()
 
 
 def _offer_submit(session, work_dir):
     """Offer to submit the job to the cluster."""
     if ask_yes_no("Submit to cluster now?", default=False):
         session["last_calc_dir"] = work_dir
-        submit_job_handler(session)
+        submit_job_handler(session, standalone=False)
+    after_complete()

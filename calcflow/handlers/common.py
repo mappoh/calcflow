@@ -1,6 +1,6 @@
 import os
 
-from calcflow.utils.prompts import ask_path, ask_yes_no
+from calcflow.utils.prompts import ask_path, ask_yes_no, ask_choice
 
 
 def pick_structure(session, prompt="Structure file"):
@@ -82,6 +82,15 @@ def pick_structures(session):
         except ValueError:
             pass
         print(f"  Please enter numbers between 1 and {len(structures)}.")
+
+
+def after_complete():
+    """Ask user whether to continue or exit after a task completes."""
+    action = ask_choice("What would you like to do?",
+                        ["continue (back to menu)", "exit"],
+                        default="continue (back to menu)")
+    if action == "exit":
+        raise SystemExit(0)
 
 
 def pick_calc_dir(session, prompt="Calculation directory"):

@@ -3,7 +3,7 @@ import os
 from calcflow.core.vasp_runner import run_vasp_calc
 from calcflow.presets.manager import load_preset, merge_preset, list_presets, save_user_preset
 from calcflow.config.settings import get_config, update_config
-from calcflow.handlers.common import pick_structure
+from calcflow.handlers.common import pick_structure, after_complete
 from calcflow.utils.prompts import ask, ask_int, ask_yes_no, ask_choice, ask_incar_params
 from calcflow.utils.fs import prepare_output_directory
 
@@ -48,6 +48,7 @@ def encut_convergence(session):
     print(
         f"\n  All {len(encut_values)} calculations set up in {os.path.basename(output_base)}/")
     print("  Use Post-Processing > Extract Energies to compare results.")
+    after_complete()
 
 
 def kpoints_convergence(session):
@@ -91,6 +92,7 @@ def kpoints_convergence(session):
     print(
         f"\n  All {len(k_values)} calculations set up in {os.path.basename(output_base)}/")
     print("  Use Post-Processing > Extract Energies to compare results.")
+    after_complete()
 
 
 def manage_presets(session):  # pylint: disable=unused-argument
@@ -140,6 +142,7 @@ def manage_presets(session):  # pylint: disable=unused-argument
             print(f"  Preset '{new_name}' saved to ~/.calcflow/presets/")
         else:
             print("  Preset not saved.")
+    after_complete()
 
 
 def configure(session):  # pylint: disable=unused-argument
@@ -195,3 +198,4 @@ def configure(session):  # pylint: disable=unused-argument
 
     update_config(updates)
     print("\n  Configuration updated.")
+    after_complete()

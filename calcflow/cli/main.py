@@ -165,6 +165,9 @@ def _dispatch(category_id, option_index):
         print("\n  Interrupted. Returning to menu.")
     except CalcFlowError as e:
         print(f"\n  Error: {e}")
+    except SystemExit:
+        _erase_lines()
+        raise
 
 
 def run():

@@ -2,11 +2,11 @@ import os
 
 from calcflow.core.job_submitter import submit_job, check_job_status, cancel_job
 from calcflow.config.settings import get_config
-from calcflow.handlers.common import pick_calc_dir
+from calcflow.handlers.common import pick_calc_dir, after_complete
 from calcflow.utils.prompts import ask, ask_int, ask_choice, ask_yes_no
 
 
-def submit_job_handler(session):
+def submit_job_handler(session, standalone=True):
     """401 - Submit a VASP job to SGE."""
     config = get_config()
     cluster = config.get("cluster", {})
@@ -54,13 +54,17 @@ def submit_job_handler(session):
     )
 
     session["last_job_id"] = job_id
-    print(f"\n  Job submitted: {job_id}")
+    print(f"\n  Job submitted successfully! ID: {job_id}")
+    print()
+    if standalone:
+        after_complete()
 
 
 def check_status(session):  # pylint: disable=unused-argument
     """402 - Check job status."""
     output = check_job_status()
     print(f"\n{output}")
+    after_complete()
 
 
 def cancel_job_handler(session):
@@ -82,3 +86,4 @@ def cancel_job_handler(session):
 
     result = cancel_job(job_id)
     print(f"\n  {result}")
+    after_complete()

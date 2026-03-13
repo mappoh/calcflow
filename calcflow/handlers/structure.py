@@ -1,7 +1,7 @@
 import os
 
 from calcflow.core.structure import get_structure_info, convert_structure, build_supercell
-from calcflow.handlers.common import pick_structure
+from calcflow.handlers.common import pick_structure, after_complete
 from calcflow.utils.prompts import ask_int, ask, ask_yes_no
 
 
@@ -23,6 +23,7 @@ def view_structure_info(session):
     print(f"  Volume (A^3): {info['volume']:.4f}")
     print(f"  PBC:          {info['pbc']}")
     print()
+    after_complete()
 
 
 def convert_format(session):
@@ -36,6 +37,7 @@ def convert_format(session):
 
     convert_structure(input_path, output_path)
     print(f"\n  Converted: {os.path.basename(input_path)} -> {output_path}")
+    after_complete()
 
 
 def build_supercell_handler(session):
@@ -61,3 +63,4 @@ def build_supercell_handler(session):
 
     build_supercell(input_path, output_path, (nx, ny, nz))
     print(f"\n  Supercell written to {output_path}")
+    after_complete()

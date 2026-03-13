@@ -3,7 +3,7 @@ import re
 
 from calcflow.core.freq_analyzer import run_freq_analysis
 from calcflow.core.bader import run_bader_analysis
-from calcflow.handlers.common import pick_calc_dir
+from calcflow.handlers.common import pick_calc_dir, after_complete
 from calcflow.utils.prompts import ask_yes_no
 
 
@@ -52,6 +52,7 @@ def extract_energies(session):
     else:
         print(f"\n  Energy: {energies[0][1]:.8f} eV")
     print()
+    after_complete()
 
 
 def analyze_frequencies(session):
@@ -78,6 +79,7 @@ def analyze_frequencies(session):
         print(f"  {f['mode']:>6}  {f['cm-1']:>10.2f}  {f['thz']:>10.4f}  "
               f"{f['meV']:>10.4f}  {ftype:>10}")
     print()
+    after_complete()
 
 
 def bader_analysis(session):
@@ -103,6 +105,7 @@ def bader_analysis(session):
     for i, entry in enumerate(charges, 1):
         print(f"  {i:>4}  {entry['element']:>8}  {entry['charge']:>+10.4f}")
     print()
+    after_complete()
 
 
 def extract_forces(session):
@@ -138,3 +141,4 @@ def extract_forces(session):
 
     print(f"\n  Final: RMS={max_forces[-1][0]:.6f}, Max={max_forces[-1][1]:.6f}")
     print()
+    after_complete()
