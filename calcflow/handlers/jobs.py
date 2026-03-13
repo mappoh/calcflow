@@ -11,7 +11,10 @@ def submit_job_handler(session, standalone=True):
     config = get_config()
     cluster = config.get("cluster", {})
 
-    work_dir = pick_calc_dir(session)
+    if standalone:
+        work_dir = pick_calc_dir(session)
+    else:
+        work_dir = session.get("last_calc_dir", session.get("work_dir", os.getcwd()))
     work_dir_name = os.path.basename(work_dir)
 
     name = ask("Job name",

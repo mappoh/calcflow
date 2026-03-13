@@ -168,21 +168,24 @@ def _workflow_handler(session, preset_name, after_msg=None):
         print(f"\n  {len(results)} calculations set up.")
         if after_msg:
             print(f"  {after_msg}")
-        if ask_yes_no("Submit all to cluster?", default=False):
-            for _, full_dir in results:
-                session["last_calc_dir"] = full_dir
-                submit_job_handler(session, standalone=False)
-            print(f"\n  All {len(results)} jobs submitted.")
+        print("\n  Submitting jobs to cluster...")
+        for _, full_dir in results:
+            session["last_calc_dir"] = full_dir
+            submit_job_handler(session, standalone=False)
+        print(f"\n  All {len(results)} jobs submitted.")
         after_complete()
     else:
         poscar, full_dir, params = _run_single(session, preset_name)
         if poscar is None:
             return
         run_vasp_calc(poscar, full_dir, params)
-        print(f"\n  Calculation set up in: {os.path.basename(full_dir)}")
+        print(f"\n  Calculation set up in: {os.path.basename(full_dir)}/")
         if after_msg:
             print(f"  {after_msg}")
-        _offer_submit(session, full_dir)
+        print()
+        session["last_calc_dir"] = full_dir
+        submit_job_handler(session, standalone=False)
+        after_complete()
 
 
 def geometry_optimization(session):
@@ -247,9 +250,3 @@ def neb_path_generation(session):
     after_complete()
 
 
-def _offer_submit(session, work_dir):
-    """Offer to submit the job to the cluster."""
-    if ask_yes_no("Submit to cluster now?", default=False):
-        session["last_calc_dir"] = work_dir
-        submit_job_handler(session, standalone=False)
-    after_complete()
